@@ -144,7 +144,7 @@ export class MytopicComponent extends BaseComponent implements OnInit {
           }
         });
       }
-      else{
+      else{ 
         this._api.put("api/detai/edit_detai/"+this.itemsinger.madonvi,Formdata).subscribe(res=>{
           if(res){           
             Swal.fire({
