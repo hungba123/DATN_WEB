@@ -1,0 +1,336 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Lý lịch</h1>
+    <p class="mb-4">Quản lý lý lịch của {{item.hoten}}</p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4" style="color: black;">
+        <div class="card-header py-3 row">
+            <h6 class="col-sm-10 m-0 font-weight-bold text-primary">Thông tin của {{item.hoten}}</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive container">
+                <div id="_file">
+                    <div style="text-align: center;">
+                        <h3>LÝ LỊCH KHOA HỌC</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div style="border: 1px solid black; height: 150px; width: 120px;">
+                                <h5 style="text-align: center; margin-top: 70px;" *ngIf="item.hinhanh.length == null">3 x 4</h5>
+                                <img *ngIf="item.hinhanh.length != null" src="../../../../assets/images/emloye/{{item.hinhanh}}" style="height: 150px; width: 120px;">
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h4>I. LÝ LỊCh SƠ LƯỢC</h4><br>
+                            <span>1. Họ tên: {{item.hoten}}</span><br>
+                            <span>2. Ngày sinh: {{item.ngaysinh | date: 'dd-MM-yyyy'}}</span><br>
+                            <span>3. Nơi sinh: {{item.noisinh}}</span><br>
+                            <span>4. Quê quán: {{item.quequan}}</span><br>
+                        </div>
+                    </div>
+                    <div>
+                        <span>5. Dân tộc: {{item.dantoc}}</span><br>
+                        <span>6. Địa chỉ liên lạc: {{item.noiohnay}}</span><br>
+                        <span>7. Điện thoại: {{item.dienthoai}}</span><br>
+                        <span>8. Email: {{item.email}}</span><br>
+                        <span>9. Chức vụ/ chức danh/ đơn vị công tác: {{item.chucvu}}; {{item.pban}}; trường ĐHSPKT Hưng Yên </span><br>
+                        <div class="row">
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="hv">10. Học hàm: &nbsp;</label>
+                                    <input type="text" class="form-control" id="hv" value="{{itemll.hocham}}">
+                                </div>
+                            </span>
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="hv">Năm: &nbsp;</label>
+                                    <input type="text" class="form-control" id="hv" value="{{itemll.namphong}}">
+                                </div>
+                            </span>
+                        </div><br>
+                        <div class="row">
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="hv">11. Học vị: &nbsp;</label>
+                                    <input type="text" class="form-control" id="hv" value="{{itemll.hocvi}}">
+                                </div>
+                            </span>
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="hv">Năm: &nbsp;</label>
+                                    <input type="text" class="form-control" id="hv" value="{{itemll.namcap}}">
+                                </div>
+                            </span>
+                        </div><br>
+                        <span>12. Ngành/Chuyên ngành đào tạo cao nhất: {{item.tdcaonhat}}</span><br>
+                        <div class="row">
+                            <span class="col-sm-6">13. Trình độ ngoại ngữ: {{item.trinhdonn}}</span>
+                            <span class="col-sm-6">Trình dộ tin học: {{item.tinhoc}}</span>
+                        </div><br>
+                    </div>
+                    <div>
+                        <h4 style="text-align: center;">II. QUÁ TRÌNH ĐÀO TẠO</h4>
+                        <h5>1. Đại học</h5><br>
+                        <span class="row"> 
+                            <div class="form-group form-inline">
+                                <label for="hdt">Hệ đào tạo: &nbsp;</label>
+                                <input type="text" class="form-control" id="hdt" value="{{itemll.hedaotao}}" style="width: 300px;">
+                            </div>
+                        </span><br>
+                        <span class="row"> 
+                            <div class="form-group form-inline">
+                                <label for="ndt">Nơi đào tạo: &nbsp;</label>
+                                <input type="text" class="form-control" id="ndt" value="{{itemll.noidaotao}}">
+                            </div>
+                        </span><br>
+                        <span> 
+                            <div class="form-group form-inline">
+                                <label for="ndt">Ngành học: &nbsp;</label>
+                                <input type="text" class="form-control" id="ndt" value="{{itemll.nganhhoc}}">
+                            </div>
+                        </span><br>
+                        <div class="row">
+                            <span class="col-sm-6"> 
+                                <div class="form-group form-inline">
+                                    <label for="ndt">Nước đào tạo: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.nuocdaotao}}">
+                                </div>
+                            </span>
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="ndt">Năm tốt nghiệp: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.namtotnghiep}}">
+                                </div>
+                            </span>
+                        </div><br>
+                        <div class="row">
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="ndt">Bằng đại học 2: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.bangdaihoc}}">
+                                </div>
+                            </span>
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="ndt">Năm tốt nghiệp: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.namtotnghiep2}}">
+                                </div>
+                            </span>
+                        </div><br>
+                        <h5>2. Sau đại học</h5><br>
+                        <div class="row">
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="ndt">- Bằng Thạc sĩ chuyên ngành: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.bangthacsi}}">
+                                </div>
+                            </span>
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="ndt">Năm cấp bằng: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.namcapbang}}">
+                                </div>
+                            </span>
+                        </div><br>
+                        <span> 
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="ndt">Nơi đào tạo: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.noidaotaoa2}}">
+                                </div>
+                            </span>
+                        </span>
+                        <div class="row">
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="ndt">- Bằng Tiến sĩ chuyên ngành: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.bangtiensi}}">
+                                </div>
+                            </span>
+                            <span class="col-sm-6">
+                                <div class="form-group form-inline">
+                                    <label for="ndt">Năm cấp bằng: &nbsp;</label>
+                                    <input type="text" class="form-control" id="ndt" value="{{itemll.namtotnghiep2}}">
+                                </div>
+                            </span>
+                        </div><br>
+                        <span>  
+                            <div class="form-group form-inline">
+                                <label for="ndt">+ Nơi đào tạo: &nbsp;</label>
+                                <input type="text" class="form-control" id="ndt" value="{{itemll.noidaotao2}}">
+                            </div>
+                        </span><br>
+                        <span class="row"> 
+                            <div class="form-group form-inline">
+                                <label for="ndt">+ Tên chuyên đề luận án bậc cao nhất: &nbsp;</label>
+                                <input type="text" class="form-control" id="ndt" value="{{itemll.tenchuyende}}">
+                                <!-- <textarea class="form-control" rows="3">{{itemll.tenchuyende}}</textarea> -->
+                            </div>
+                        </span><br>
+                        <div>
+                            <h5>3. Đào tạo bồi dưỡng</h5><br>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><b>Thời gian</b></th>
+                                        <th scope="col"><b>Địa điểm</b></th>
+                                        <th scope="col"><b>Chứng chỉ/ chứng nhận</b></th>
+                                        <th scope="col"><b>Ghi chú</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let bd of itembd">
+                                        <tr>
+                                            <th scope="row">{{bd.ngaybd | date: 'yyyy'}} <span *ngIf="bd.ngaykt!=null">- {{bd.ngaykt | date: 'yyyy'}}</span><span *ngIf="bd.ngaykt==null"></span></th>
+                                            <td>{{bd.noibd}}</td>
+                                            <td>{{bd.noidung}}</td>
+                                            <td></td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="text-align: center;">III. QUÁ TRÌNH CÔNG TÁC CHUYÊN MÔN</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><b>Thời gian</b> <br>(Từ tháng/năm đến tháng/năm)</th>
+                                    <th scope="col"><b>Đơn vị</b></th>
+                                    <th scope="col"><b>Chức vụ/ chức danh</b></th>
+                                    <th scope="col"><b>Chuyên ngành giảng dạy</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let ct of itemct">
+                                    <tr>
+                                        <th scope="row">{{ct.ngaybad | date: 'yyyy'}} - <span *ngIf="ct.ngaykt!=null">{{ct.ngaykt | date: 'yyyy'}}</span><span *ngIf="ct.ngaykt==null">Nay</span></th>
+                                        <td>{{ct.noict}}</td>
+                                        <td>{{ct.chucvu}}</td>
+                                        <td>{{ct.chucdanh}}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <h4 style="text-align: center;">IV. QUÁ TRÌNH NGHIÊN CỨU KHOA HỌC</h4>
+                        <h5>1. Các đề tài nghiên cứu khoa học</h5><br>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><b>TT</b></th>
+                                    <th scope="col"><b>Tên đề tài nghiên cứu/<br>Lĩnh vực ứng dụng</b></th>
+                                    <th scope="col"><b>Mã số</b></th>
+                                    <th scope="col"><b>Cấp bảo vệ</b></th>
+                                    <th scope="col"><b>Thời gian</b><br><i>(Bắt đầu- kết thúc)</i></th>
+                                    <th scope="col"><b>Trách nghiệm tham gia<br> trong đề tài</b></th>
+                                    <th scope="col"><b>Kết quả nghiệm thu</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let dt of itemchutri; let i = index;">
+                                    <tr>
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{dt.tendetai}}</td>
+                                        <td>{{dt.sohieu}}</td>
+                                        <td>{{displaycbv(dt.capbv)}}</td>
+                                        <td>{{dt.thoigianbd | date :'yyyy'}} - {{dt.thoigiankt | date :'yyyy'}}</td>
+                                        <td>Chủ trì</td>
+                                        <td>{{displaykq(dt.kqbv)}}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                        <h5>2. Các bài báo, báo cáo khoa học</h5><br>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><b>TT</b></th>
+                                    <th scope="col"><b>Tên bài báo cáo, báo cáo khoa học</b></th>
+                                    <th scope="col"><b>Nơi đăng</b></th>
+                                    <th scope="col"><b>Thời gian</b></th>
+                                    <th scope="col"><b>Ghi chú</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let dt of itemxuatban; let i = index;">
+                                    <tr>
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{dt.tendetai}}</td>
+                                        <td>{{dt.noidang}}</td>
+                                        <td>{{dt.namdang}}</td>
+                                        <td></td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                        <h5>3. Sách, giáo trình đã xuất bản</h5><br>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><b>TT</b></th>
+                                    <th scope="col"><b>Tên sách, giáo trình, công trình</b></th>
+                                    <th scope="col"><b>Nơi xuất bản</b></th>
+                                    <th scope="col"><b>Thời gian</b></th>
+                                    <th scope="col"><b>Ghi chú</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let dt of itembcxuatban; let i = index;">
+                                    <tr>
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{dt.tendetai}}</td>
+                                        <td>{{dt.noidang}}</td>
+                                        <td>{{dt.namdang}}</td>
+                                        <td></td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                        <h5>4. Các công trình, kết quả nghiên cứu được áp dụng trong thực tiễn (nếu có)</h5><br>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><b>TT</b></th>
+                                    <th scope="col"><b>Tên công trình</b></th>
+                                    <th scope="col"><b>Hình thức, quy mô, địa chỉ áp dụng</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let dt of itemtt; let i = index;">
+                                    <tr>
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{dt.tendetai}}</td>
+                                        <td>{{dt.ghichu}}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <span>Tôi xin cam đoan những lời khai trên là đúng sự thật</span><br>
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">Hưng Yên, ngày {{time.getDate()}} tháng {{time.getMonth()}} năm {{time.getFullYear()}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-3"><b>Xác nhận của cơ quan công tác</b></div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4 text-center"><b>Người khai</b></div>
+                        </div>
+                        <div style="height: 100px;"></div>
+                    </div>
+                </div>
+                <div aglin="center">
+                    <button type="button" class="btn btn-warning">Lưu <i class="fa fa-floppy" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

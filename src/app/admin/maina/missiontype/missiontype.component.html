@@ -1,0 +1,117 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Loại nhiệm vụ</h1>
+    <p class="mb-4">Quản lý danh sách loại nhiệm vụ</p>
+    <div class="container">
+        <br/>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <form class="card card-sm">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col-auto">
+                        </div>
+                        <!--end of col-->
+                        <div class="col">
+                            <input class="form-control form-control-lg form-control-borderless" #search (change)="preup_(search.value)" type="search" placeholder="Nhập nội dung tìm kiếm">
+                        </div>
+                        <!--end of col-->
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-success" (click)="search_()" type="button"><i class="fas fa-search" aria-hidden="true"></i></button>
+                        </div>
+                        <!--end of col-->
+                    </div>
+                </form>
+            </div>
+            <!--end of col-->
+        </div>
+    </div>
+    <br>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 row">
+            <h6 class="col-sm-10 m-0 font-weight-bold text-primary">Danh sách</h6>
+            <div class="col-dm-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="create()"><i class="fa fa-plus" aria-hidden="true"></i> Thêm </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tên loại nhiệm vụ</th>
+                            <th>Ghi chú</th>
+                            <th>C</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Tên loại nhiệm vụ</th>
+                            <th>Ghi chú</th>
+                            <th>C</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr *ngFor="let dv of item.result">
+                            <td>{{dv.tenloainv}}</td>
+                            <td>{{dv.ghichu}}</td>
+                            <td>{{dv.c}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" (click)="edit(dv.id)"><i class="fa fa-wrench" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="delete_(dv.id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination" *ngIf="item.total>6">
+                    <li class="page-item">
+                        <a class="page-link" (click)="onpagination_(pageindex-1)" href="javascript:void(0)">
+                            << </a>
+                    </li>
+                    <ng-container *ngFor="let i of pagination(item.total)">
+                        <li class="page-item" [ngClass]="{'active':pageindex==i}">
+                            <a class="page-link" *ngIf="pageindex==i">{{i}}</a>
+                            <a class="page-link" (click)="onpagination_(i)" href="javascript:void(0)" *ngIf="pageindex!=i">{{i}}</a>
+                        </li>
+                    </ng-container>
+                    <li class="page-item"><a (click)="onpagination_(pageindex+1)" class="page-link" href="javascript:void(0)">>></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin loại nhiệm vụ</h5>
+                <button type="button" id="closeModel" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tên loại nhiệm vụ</label>
+                    <input type="text" value="{{tenloainv}}" #tenlnv class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Ghi chú</label>
+                    <input type="text" value="{{ghichu}}" #gc class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">C</label>
+                    <input type="text" value="{{c}}" #cc class="form-control" id="exampleInputEmail1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" (click)="exec(tenlnv.value,gc.value,cc.value)">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

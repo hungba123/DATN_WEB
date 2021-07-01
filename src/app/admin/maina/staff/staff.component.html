@@ -1,0 +1,250 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Cán bộ</h1>
+    <p class="mb-4">Quản lý danh sách cán bộ</p>
+    <div class="container">
+        <br/>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <form class="card card-sm">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col-auto">
+                        </div>
+                        <!--end of col-->
+                        <div class="col">
+                            <input class="form-control form-control-lg form-control-borderless" #search (change)="preup_(search.value)" type="search" placeholder="Nhập nội dung tìm kiếm">
+                        </div>
+                        <!--end of col-->
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-success" (click)="search_()" type="button"><i class="fas fa-search" aria-hidden="true"></i></button>
+                        </div>
+                        <!--end of col-->
+                    </div>
+                </form>
+            </div>
+            <!--end of col-->
+        </div>
+    </div>
+    <br>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 row">
+            <h6 class="col-sm-10 m-0 font-weight-bold text-primary">Danh sách</h6>
+            <div class="col-dm-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="create()"><i class="fa fa-plus" aria-hidden="true"></i> Thêm </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ tên</th>
+                            <th>Giới tính</th>
+                            <th>Điện thoại</th>
+                            <th>Email</th>
+                            <th>Bộ phận</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>STT</th>
+                            <th>Họ tên</th>
+                            <th>Giới tính</th>
+                            <th>Điện thoại</th>
+                            <th>Email</th>
+                            <th>Bộ phận</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr *ngFor="let dv of item.result; let i = index;">
+                            <td>{{i+1}}</td>
+                            <td>{{dv.hoten}}</td>
+                            <td>{{displaygt(dv.gioitinh)}}</td>
+                            <td>{{dv.dienthoai}}</td>
+                            <td>{{dv.email}}</td>
+                            <td>{{dv.pban}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/admin/lylich',dv.id]"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-primary btn-sm" [routerLink]="['/admin/sualylich',dv.id]"><i class="fa fa-id-badge" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" (click)="edit(dv.id)"><i class="fa fa-wrench" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="delete_(dv.id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="pagination" *ngIf="item.total>6">
+                    <li class="page-item">
+                        <a class="page-link" (click)="onpagination_(pageindex-1)" href="javascript:void(0)">
+                            << </a>
+                    </li>
+                    <ng-container *ngFor="let i of pagination(item.total)">
+                        <li class="page-item" [ngClass]="{'active':pageindex==i}">
+                            <a class="page-link" *ngIf="pageindex==i">{{i}}</a>
+                            <a class="page-link" (click)="onpagination_(i)" href="javascript:void(0)" *ngIf="pageindex!=i">{{i}}</a>
+                        </li>
+                    </ng-container>
+                    <li class="page-item"><a (click)="onpagination_(pageindex+1)" class="page-link" href="javascript:void(0)">>></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin hoạt dộng nghiên cứu khoa học</h5>
+                <button type="button" #closebutton id="closeModel" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Họ tên</label>
+                    <input type="text" value="{{txthoten}}" #ht class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Bí danh</label>
+                    <input type="text" value="{{txtbidanh}}" #bd class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Hình ảnh</label>
+                    <input type="file" (change)="changeimg($event)" class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group form-inline">
+                    <label for="exampleInputEmail1">Giới tính &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" (click)="changegt(1)" value="1" [checked]="txtgioitinh == 1">
+                        <label class="form-check-label" for="exampleRadios1">
+                          Nam &nbsp;&nbsp;&nbsp;&nbsp;
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" (click)="changegt(2)" value="2" [checked]="txtgioitinh == 2">
+                        <label class="form-check-label" for="exampleRadios2">
+                          Nữ
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Ngày sinh</label>
+                    <input type="date" max="{{datetime}}" value="{{txtngaysinh|date:'yyyy-MM-dd'}}" #ngays class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nơi sinh</label>
+                    <input type="text" value="{{txtnoisinh}}" #nois class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Chứng minh nhân dân</label>
+                    <input type="text" pattern="[0-9]+" title="Chỉ chứa số" value="{{txtcmnd}}" #cmnd class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nơi cấp chứng minh nhân dân</label>
+                    <input type="text" value="{{txtncapcmnd}}" #noiccmnd class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Dân tộc</label>
+                    <input type="text" value="{{txtdantoc}}" #dt class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tôn giáo</label>
+                    <input type="text" value="{{txttongiao}}" #tg class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Quốc tịch</label>
+                    <input type="text" value="{{txtquoctich}}" #qt class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group form-inline">
+                    <label for="exampleInputEmail1">Tình trạng hôn nhân &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <div class="form-check">
+                        <input class="form-check-input" (click)="changetthn(1)" type="radio" name="example" id="exampleRadios1" value="1" [checked]="txttinhtrang == 1">
+                        <label class="form-check-label" for="exampleRadios1">
+                          Rồi &nbsp;&nbsp;&nbsp;&nbsp;
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" (click)="changetthn(0)" type="radio" name="example" id="exampleRadios2" value="0" [checked]="txttinhtrang == 0">
+                        <label class="form-check-label" for="exampleRadios2">
+                            Chưa
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Quê quán</label>
+                    <input type="text" value="{{txtquequan}}" #qq class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Địa chỉ thường trú</label>
+                    <input type="text" value="{{txtdcttru}}" #dctt class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nơi ở hiện tại</label>
+                    <input type="text" value="{{txtnoiohnay}}" #noht class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Điện thoại</label>
+                    <input type="text" value="{{txtdienthoai}}" #dient class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="text" value="{{txtemail}}" #email class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Phòng ban</label>
+                    <select class="form-control" #pb>
+                        <ng-container *ngFor="let se of itempb">
+                            <option value="{{se.id}}" [selected]="selecpb==se.id">{{se.tenphongban}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Chức vụ</label>
+                    <select class="form-control" #cv>
+                        <ng-container *ngFor="let se of itemcv">
+                            <option value="{{se.id}}" [selected]="seleccv==se.id">{{se.tenchucvu.split(' ').length>10?cat_(se.tenchucvu):se.tenchucvu}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Trình độ học vấn</label>
+                    <input type="text" value="{{txttdhocvan}}" #tdhv class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Trình độ cao nhất</label>
+                    <input type="text" value="{{txttddtcn}}" #tdcn class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Chuyên ngành đào tạo</label>
+                    <input type="text" value="{{txtcngdaotao}}" #cndt class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Nơi đào tạo</label>
+                    <input type="text" value="{{txtnoidaotao}}" #ndt class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Hệ thống đào tạo</label>
+                    <input type="text" value="{{txthtdaotao}}" #htdt class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Trình độ ngôn ngữ</label>
+                    <input type="text" value="{{txttrinhdonn}}" #tdnn class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Tin học</label>
+                    <input type="text" value="{{txttinhoc}}" #th class="form-control" id="exampleInputEmail1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" (click)="exec(ht.value,bd.value,ngays.value,nois.value,cmnd.value,noiccmnd.value,dt.value,tg.value,qt.value,qq.value,dctt.value,noht.value, dient.value, email.value, pb.value, cv.value, tdhv.value, tdcn.value,cndt.value,ndt.value,htdt.value,tdnn.value,th.value)">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

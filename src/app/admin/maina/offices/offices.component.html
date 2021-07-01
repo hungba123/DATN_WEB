@@ -1,0 +1,172 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Người dùng</h1>
+    <p class="mb-4">Quản lý danh sách người dùng</p>
+    <div class="container">
+        <br/>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <form class="card card-sm">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col-auto">
+                            Tìm kiếm
+                        </div>
+                        <!--end of col-->
+                        <div class="col">
+                            <input class="form-control form-control-lg form-control-borderless" #search (change)="preup_(search.value)" type="search" placeholder="Nhập nội dung tìm kiếm">
+                        </div>
+                        <!--end of col-->
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-success" (click)="search_()" type="button"><i class="fas fa-search" aria-hidden="true"></i></button>
+                        </div>
+                        <!--end of col-->
+                    </div>
+                </form>
+            </div>
+            <!--end of col-->
+        </div>
+    </div>
+    <br>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 row">
+            <h6 class="col-sm-10 m-0 font-weight-bold text-primary">Danh sách</h6>
+            <div class="col-dm-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="create()"><i class="fa fa-plus" aria-hidden="true"></i> Thêm </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <ng-container>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tài khoản</th>
+                                <th>Hình ảnh</th>
+                                <th>Role</th>
+                                <th>Mã cán bộ</th>
+                                <th>Cấp tài khoản</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tài khoản</th>
+                                <th>Hình ảnh</th>
+                                <th>Role</th>
+                                <th>Mã cán bộ</th>
+                                <th>Cấp tài khoản</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr *ngFor="let us of item.result; let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{us.taikhoan}}</td>
+                                <td><img src="../../../../assets/images/user/{{us.hinhanh}}" style="width: 50px; height: 50px;"></td>
+                                <td>
+                                    <span *ngIf="us.idrole==1" class="badge badge-success">Admin</span>
+                                    <span *ngIf="us.idrole==2" class="badge badge-warning">Nhân viên</span>
+                                    <span *ngIf="us.idrole==3" class="badge badge-danger">Cán bộ</span>
+                                </td>
+                                <td class="text-center">{{us.idnhanvien}}</td>
+                                <td>
+                                    <button class="btn btn-primary" *ngIf="us.idnhanvien==null && us.idrole==3" (click)="change_user_assc(us.id)">
+                                        <i class="fa fa-american-sign-language-interpreting" aria-hidden="true" data-toggle="modal" data-target="#exampleAccess"></i>
+                                    </button>
+                                    <button class="btn btn-warning ml-2" *ngIf="us.idrole!=1" (click)="delete_us(us.id)">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="btn ml-2" *ngIf="us.idrole!=1" [ngClass]="{'btn-success' : us.trangthai == 1, 'btn-danger': us.trangthai == 2}" (click)="change_status_us(us.id)">
+                                        <i class="fa fa-unlock" aria-hidden="true" *ngIf="us.trangthai==1"></i>
+                                        <i class="fa fa-lock" aria-hidden="true" *ngIf="us.trangthai==2"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+            <ul class="pagination" *ngIf="item.total>6">
+                <li class="page-item">
+                    <a class="page-link" (click)="onpagination_(pageindex-1)" href="javascript:void(0)">
+                        << </a>
+                </li>
+                <ng-container *ngFor="let i of pagination(item.total)">
+                    <li class="page-item" [ngClass]="{'active':pageindex==i}">
+                        <a class="page-link" *ngIf="pageindex==i">{{i}}</a>
+                        <a class="page-link" (click)="onpagination_(i)" href="javascript:void(0)" *ngIf="pageindex!=i">{{i}}</a>
+                    </li>
+                </ng-container>
+                <li class="page-item"><a (click)="onpagination_(pageindex+1)" class="page-link" href="javascript:void(0)">>></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin người dùng</h5>
+                <button type="button" #closebutton id="closeModel" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="txtloaitintuc">Tài khoản</label>
+                    <input type="text" [(ngModel)]="taikhoan" #tk class="form-control " id="txtloaitintuc">
+                </div>
+                <div class="form-group">
+                    <label for="txtloaitintuc">Mật khẩu</label>
+                    <input type="text" [(ngModel)]="matkhau" #mk class="form-control " id="txtloaitintuc">
+                </div>
+                <div class="form-group">
+                    <label for="txthinhanh">Hình ảnh</label>
+                    <input type="file" accept="image/*" class="form-control-file" (change)="onimg($event)" #ha id="txthinhanh">
+                    <div id="display"></div>
+                </div>
+                <div class="form-group">
+                    <label for="txtloaitintuc">Role</label>
+                    <select #role class="form-control">
+                        <ng-container *ngFor="let it of itemrole">
+                            <option value="{{it.id}}">{{it.ten}}</option>
+                        </ng-container>                       
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button " class="btn btn-secondary " data-dismiss="modal ">Đóng</button>
+                <button type="button " class="btn btn-primary " (click)="exec(tk.value,mk.value,role.value)">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleAccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kết nối tài khoản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Chọn cán bộ</label>
+                    <select class="form-control" id="exampleFormControlSelect1" #seus>
+                      <ng-container *ngFor="let itus of itemuser">
+                        <option value="{{itus.id}}">{{itus.hoten}}</option>
+                      </ng-container>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" (click)="Access_User(seus.value)">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

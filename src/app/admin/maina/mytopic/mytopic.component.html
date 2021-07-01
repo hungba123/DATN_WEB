@@ -1,0 +1,183 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Đề tài</h1>
+    <p class="mb-4">Quản lý danh sách đề tài</p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 row">
+            <h6 class="col-sm-10 m-0 font-weight-bold text-primary">Danh sách</h6>
+            <div class="col-dm-2">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="create()"><i class="fa fa-plus" aria-hidden="true"></i> Thêm </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Tên đề tài</th>
+                            <th>Số hiệu</th>
+                            <th>Lĩnh vực</th>
+                            <th>Cấp bảo vệ</th>
+                            <th>Thời gian</th>
+                            <th>Tình trạng</th>
+                            <th>Minh chứng</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Tên đề tài</th>
+                            <th>Số hiệu</th>
+                            <th>Lĩnh vực</th>
+                            <th>Cấp bảo vệ</th>
+                            <th>Thời gian</th>
+                            <th>Tình trạng</th>
+                            <th>Minh chứng</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr *ngFor="let dt of item">
+                            <td>{{dt.tendetai}}</td>
+                            <td>{{dt.sohieu}}</td>
+                            <td>{{dt.tenlinhvuc}}</td>
+                            <td>{{resultbv(dt.capbv)}}</td>
+                            <td>{{dt.thoigianbd | date:"yyyy"}} - {{dt.thoigiankt | date:"yyyy"}} </td>
+                            <td>
+                                <span *ngIf="dt.tinhtrang == 1" class="badge badge-primary">Chưa duyệt</span>
+                                <span *ngIf="dt.tinhtrang == 2" class="badge badge-info">Duyệt</span>
+                                <span *ngIf="dt.tinhtrang == 3" class="badge badge-warning">Hoàn thành</span>
+                                <span *ngIf="dt.tinhtrang == 4" class="badge badge-success">Xin thêm thời gian</span>
+                                <span *ngIf="dt.tinhtrang == 5" class="badge badge-danger">Áp dụng vào thực tiễn</span>
+                            </td>
+                            <td>
+                                <span *ngIf="dt.tinhtrang == 5 && dt.minhchung ==null">
+                                    <label>
+                                        upload file
+                                        <input type="file" style="display: none;">
+                                    </label>
+                                </span>
+                                <span *ngIf="dt.tinhtrang == 5 && dt.minhchung !=null">
+                                    <a href="javascript:void(0)">download file</a>
+                                </span>
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" [routerLink]="['/admin/chitietdetai',dt.id]"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="delete_(dt.id)">Huỷ</button>
+                                <button type="button" class="btn btn-primary btn-sm" *ngIf="dt.tinhtrang == 2" (click)="chuyenhuy_(dt.id,-1)"><i class="fa fa-calendar" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm" *ngIf="dt.tinhtrang == 2" (click)="chuyenhoanthanh_(dt.id,3)">Hoàn thành</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<form [formGroup]="form_topic" (ngSubmit)="exec($event)">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông tin đề tài</h5>
+                    <button type="button" id="closeModel" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tên đề tài:</label>
+                        <input type="text" formControlName="tendetai_" value="{{tendt}}" #dv class="form-control" id="exampleInputEmail1">
+                        <div *ngIf="submitted && form_topic.controls.tendetai_.errors" style="color: red; font-size: 10px;">
+                            <div *ngIf="form_topic.controls.tendetai_.errors.required">Tên đề tài không được trống</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Số hiệu:</label>
+                        <input type="text" formControlName="sohieu_" value="{{sohieu}}" #sohieuu class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tập:</label>
+                        <input type="number" formControlName="tap_" min="0" value="{{tap}}" #ta class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Số:</label>
+                        <input type="number" formControlName="so_" min="0" value="{{so}}" #soo class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Trang:</label>
+                        <input type="number" formControlName="trang_" min="0" value="{{trang}}" #trangg class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Số Impact Factor(đối với các tạp chí ISI):</label>
+                        <input type="text" formControlName="soif_" value="{{soif}}" #soiff class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ghi chú:</label>
+                        <ckeditor #myEditor formControlName="ghichu_" [(ngModel)]="ckeditorContent" [config]="{uiColor: '#a4a4a4'}" debounce="500"></ckeditor>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Lĩnh vực:</label>
+                        <select #lv class="form-control" formControlName="linhvuc_">
+                            <option *ngFor="let lv of itemlinhvuc" value="{{lv.id}}">{{lv.tenlinhvuc}}</option>
+                        </select>
+                        <div *ngIf="submitted && form_topic.controls.linhvuc_.errors" style="color: red; font-size: 10px;">
+                            <div *ngIf="form_topic.controls.linhvuc_.errors.required">Lĩnh vực không được trống</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Loại nhiệm vụ:</label>
+                        <select #lnv class="form-control" formControlName="loainhiemvu_">
+                            <option *ngFor="let lnv of itemloainhiemvu" value="{{lnv.id}}">{{lnv.tenloainv}}</option>
+                        </select>
+                        <div *ngIf="submitted && form_topic.controls.loainhiemvu_.errors" style="color: red; font-size: 10px;">
+                            <div *ngIf="form_topic.controls.loainhiemvu_.errors.required">Loại nhiệm vụ được trống</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Hoạt động nghiên cứu khoa học:</label>
+                        <select #hdnckh class="form-control" formControlName="hdnckhoahoc_">
+                            <option *ngFor="let hdnc of itemhoatdong" title="{{hdnc.tenhdnckh}}" value="{{hdnc.id}}">{{hdnc.tenhdnckh.split(' ').length > 11 ? splittenhdnckh(hdnc.tenhdnckh) : hdnc.tenhdnckh}}</option>
+                        </select>
+                        <div *ngIf="submitted && form_topic.controls.hdnckhoahoc_.errors" style="color: red; font-size: 10px;">
+                            <div *ngIf="form_topic.controls.hdnckhoahoc_.errors.required">Hoạt động nghiên cứu khoa học không được trống</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Thời gian bắt đầu:</label>
+                        <input formControlName="tgbatdau_" type="date" value="{{thoigianbd}}" #tgbd class="form-control" id="exampleInputEmail1">
+                        <div *ngIf="submitted && form_topic.controls.tgbatdau_.errors" style="color: red; font-size: 10px;">
+                            <div *ngIf="form_topic.controls.tgbatdau_.errors.required">Thời gian bắt đầu không được trống</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Thời gian kết thúc:</label>
+                        <input formControlName="tgketthuc_" type="date" value="{{thoigiankt}}" #tgkt class="form-control" id="exampleInputEmail1">
+                        <div *ngIf="submitted && form_topic.controls.tgketthuc_.errors" style="color: red; font-size: 10px;">
+                            <div *ngIf="form_topic.controls.tgketthuc_.errors.required">Thời gian kết thúc không được trống</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Cấp bảo vệ:</label>
+                        <select #cbv class="form-control" formControlName="capbv_">
+                            <option value="1">Đề tài cấp bộ</option>
+                            <option value="2">Đề tài cấp trường</option>
+                            <option value="3">Đề tài cấp nhà nước</option>
+                        </select>
+                        <div *ngIf="submitted && form_topic.controls.capbv_.errors" style="color: red; font-size: 10px;">
+                            <div *ngIf="form_topic.controls.capbv_.errors.required">Cấp bảo vệ không được trống</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

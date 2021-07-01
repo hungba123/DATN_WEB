@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Người dùng</h1>
+    <p class="mb-4">Quản lý danh sách người dùng</p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 row">
+            <h6 class="col-sm-10 m-0 font-weight-bold text-primary">Đổi mật khẩu</h6>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="exampleInputmkm">Mật khẩu mới <span style="color: red;">(*)</span></label>
+                <div style="position: relative;">
+                    <input type="password" [(ngModel)]="matkm" #mkm (keyup)="changemkm_(mkm.value)" class="form-control" id="exampleInputmkm" placeholder="Mật khẩu mới">
+                    <span id="mkm_eye" (click)="on_display_pass(1)" style="cursor: pointer;"><i class="fa fa-eye" style="position: absolute; top: 10px; right: 10px; font-size:20px;" aria-hidden="true"></i></span>
+                </div>
+                <small id="alertmkm" style="color: red;"></small>
+                <div id="displaylevel"></div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputnlmk">Nhập lại mật khẩu <span style="color: red;">(*)</span></label>
+                <div style="position: relative;">
+                    <input type="password" #nlmk [(ngModel)]="nlmatk" (keyup)="changenlmk_(nlmk.value,mkm.value)" class="form-control" id="exampleInputnlmk" placeholder="Nhập lại mật khẩu">
+                    <span id="nlkm_eye" (click)="on_display_pass(2)" style="cursor: pointer;"><i class="fa fa-eye" style="position: absolute; top: 10px; right: 10px; font-size:20px;" aria-hidden="true"></i></span>
+                </div>
+                <small id="alertnlmk" style="color: red;"></small>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputmkc">Mật khẩu cũ <span style="color: red;">(*)</span></label>
+                <div style="position: relative;">
+                    <input type="password" #mkc [(ngModel)]="matkc" (keyup)="changenc_(mkc.value)" class="form-control" id="exampleInputmkc" placeholder="Mật khẩu cũ">
+                    <span id="mkc_eye" (click)="on_display_pass(3)" style="cursor: pointer;"><i class="fa fa-eye" style="position: absolute; top: 10px; right: 10px; font-size: 20px;" aria-hidden="true"></i></span>
+                </div>
+                <small id="alertmkc" style="color: red;"></small>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" (click)="doimatkhau(mkm.value, nlmk.value, mkc.value)">Đổi mật khẩu</button>
+                <button class="btn btn-info ml-3" [disabled]="onsubmit=='true' ? true : false" (click)="lammoi()">Làm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
